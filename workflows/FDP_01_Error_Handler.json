@@ -1,0 +1,203 @@
+{
+  "name": "FDP 01 Error Handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e619e9bc-4809-4d33-9674-1a782c8d7033",
+      "name": "FDP 01 Error Handler"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblooOgxl9veB39Vs",
+          "mode": "list",
+          "cachedResultName": "Dashboard KPIs",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblooOgxl9veB39Vs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Registro": "={{ $json.execution?.id || $json.executionId || $now.toMillis() }}",
+            "Es error": 1,
+            "Generó contenido": 0,
+            "Fue aprobado": 0,
+            "Costo USD": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Registro",
+              "displayName": "Registro",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ejecución",
+              "displayName": "Ejecución",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Es exitosa",
+              "displayName": "Es exitosa",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Es error",
+              "displayName": "Es error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Generó contenido",
+              "displayName": "Generó contenido",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fue aprobado",
+              "displayName": "Fue aprobado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tasa error row",
+              "displayName": "Tasa error row",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Tasa aprobación row",
+              "displayName": "Tasa aprobación row",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Costo USD",
+              "displayName": "Costo USD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "705deef1-19d0-440e-8e46-7f6fe1ad77d3",
+      "name": "Create a record",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "FDP 01 Error Handler": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "35a4d52a-0c94-4e2c-92ad-ea579b82aea5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3af8d6d093ac9c025d596e10cab4b04da8be12330e822a56a8aa30ba617de09a"
+  },
+  "nodeGroups": [],
+  "id": "hjHeUeUjoBagLCTp",
+  "tags": []
+}

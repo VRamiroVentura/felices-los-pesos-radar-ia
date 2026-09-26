@@ -1,0 +1,2759 @@
+{
+  "name": "FDP 01 Radar de Contenido",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c0f5f6ad-d680-4aad-a8cb-c20f92c17679",
+      "name": "Trigger Manual Pruebas",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "workflow",
+              "value": "radar_contenido",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "execution_id",
+              "value": "={{ $now.toMillis() }}",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "started_at",
+              "value": "={{ $now.toISO() }}",
+              "type": "string"
+            },
+            {
+              "id": "a4",
+              "name": "affinity_threshold",
+              "value": 60,
+              "type": "number"
+            },
+            {
+              "id": "a5",
+              "name": "score_threshold",
+              "value": 65,
+              "type": "number"
+            },
+            {
+              "id": "a6",
+              "name": "max_candidates",
+              "value": 8,
+              "type": "number"
+            },
+            {
+              "id": "a7",
+              "name": "approval_email",
+              "value": "cdor.ventura@gmail.com",
+              "type": "string"
+            },
+            {
+              "id": "a8",
+              "name": "test_force_error",
+              "value": false,
+              "type": "boolean"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8852fae3-3aa6-4dfe-8afe-00ed90bf88b0",
+      "name": "Configurar Ejecucion",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        224,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblMAqdomkw6XmQ8y",
+          "mode": "list",
+          "cachedResultName": "Ejecuciones",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblMAqdomkw6XmQ8y"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Ejecución ID": "={{ $json.execution_id }}",
+            "Workflow": "={{ $json.workflow }}",
+            "Estado": "En curso",
+            "Inicio": "={{ $json.started_at }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Ejecución ID",
+              "displayName": "Ejecución ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Workflow",
+              "displayName": "Workflow",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Inicio",
+              "displayName": "Inicio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fin",
+              "displayName": "Fin",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "En curso",
+                  "value": "En curso"
+                },
+                {
+                  "name": "Esperando aprobación",
+                  "value": "Esperando aprobación"
+                },
+                {
+                  "name": "Exitosa",
+                  "value": "Exitosa"
+                },
+                {
+                  "name": "Rechazada",
+                  "value": "Rechazada"
+                },
+                {
+                  "name": "Sin candidatos",
+                  "value": "Sin candidatos"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Items entrada",
+              "displayName": "Items entrada",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Items salida",
+              "displayName": "Items salida",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Costo estimado USD",
+              "displayName": "Costo estimado USD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Error nodo",
+              "displayName": "Error nodo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Error mensaje",
+              "displayName": "Error mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Duración segundos",
+              "displayName": "Duración segundos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Temas",
+              "displayName": "Temas",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Contenidos",
+              "displayName": "Contenidos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "Dashboard KPIs",
+              "displayName": "Dashboard KPIs",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "27c351db-b0c0-435a-9f65-adc8891ebfb0",
+      "name": "Registrar Inicio",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        96
+      ],
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblHoFvRalQ0fIr0w",
+          "mode": "list",
+          "cachedResultName": "Fuentes",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblHoFvRalQ0fIr0w"
+        },
+        "filterByFormula": "{Activa}=1",
+        "returnAll": false,
+        "limit": 1,
+        "options": {}
+      },
+      "id": "09610cdb-9fd7-4736-aa9f-82054aa09b02",
+      "name": "Leer Fuente Activa",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        96
+      ],
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.fields.URL }}",
+        "options": {}
+      },
+      "id": "2496aef4-bcca-4c7c-baf7-2be8913b12d3",
+      "name": "Leer Noticias RSS",
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        896,
+        96
+      ],
+      "retryOnFail": true,
+      "maxTries": 2,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "id": "f24ffa0f-6c08-4c01-b659-afddc55ca4fd",
+      "name": "Limitar Noticias",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblEf7yLJtuFKrNN9",
+          "mode": "list",
+          "cachedResultName": "Temas",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblEf7yLJtuFKrNN9"
+        },
+        "filterByFormula": "LEN({Título})>0",
+        "returnAll": false,
+        "limit": 20,
+        "options": {}
+      },
+      "id": "31db49da-11f9-49ad-ba08-d66d58cc62f3",
+      "name": "Leer Historial Temas",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        1344,
+        96
+      ],
+      "executeOnce": true,
+      "alwaysOutputData": true,
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normaliza noticias RSS y excluye:\n// 1. URLs duplicadas.\n// 2. Noticias ya guardadas en Airtable.\n// 3. Distintas publicaciones sobre el mismo acontecimiento.\n\nfunction normalizeUrl(value) {\n  if (!value) return '';\n\n  return String(value)\n    .trim()\n    .split('#')[0]\n    .replace(/\\/$/, '')\n    .toLowerCase();\n}\n\n// Palabras frecuentes que no ayudan a identificar el acontecimiento.\nconst stopWords = new Set([\n  'a', 'al', 'ante', 'bajo', 'con', 'contra', 'de', 'del', 'desde',\n  'durante', 'e', 'el', 'ella', 'en', 'entre', 'es', 'esta', 'este',\n  'estos', 'estas', 'ha', 'hacia', 'hasta', 'la', 'las', 'le', 'lo',\n  'los', 'más', 'menos', 'para', 'pero', 'por', 'que', 'se', 'sin',\n  'sobre', 'su', 'sus', 'tras', 'un', 'una', 'uno', 'unos', 'unas',\n  'y', 'ya', 'como', 'cuándo', 'cuando', 'qué', 'cual', 'cuál'\n]);\n\nfunction normalizeText(value) {\n  return String(value || '')\n    .toLowerCase()\n    .normalize('NFD')\n    .replace(/[\\u0300-\\u036f]/g, '')\n    .replace(/[^a-z0-9ñ\\s]/g, ' ')\n    .replace(/\\s+/g, ' ')\n    .trim();\n}\n\n// Unifica algunas variantes frecuentes para mejorar la comparación.\nfunction canonicalToken(token) {\n  const equivalents = {\n    compra: 'comprar',\n    compro: 'comprar',\n    comprara: 'comprar',\n    comprará: 'comprar',\n    comprando: 'comprar',\n    autorizada: 'autorizar',\n    autorizado: 'autorizar',\n    autoriza: 'autorizar',\n    autorizo: 'autorizar',\n    autorizó: 'autorizar',\n    bancos: 'banco',\n    digitales: 'digital',\n    argentinos: 'argentina',\n    argentinas: 'argentina'\n  };\n\n  return equivalents[token] || token;\n}\n\nfunction titleTokens(title) {\n  return new Set(\n    normalizeText(title)\n      .split(' ')\n      .map(canonicalToken)\n      .filter(token => token.length > 2 && !stopWords.has(token))\n  );\n}\n\n// Coeficiente Dice:\n// 0 = títulos totalmente diferentes.\n// 1 = títulos equivalentes.\nfunction titleSimilarity(titleA, titleB) {\n  const tokensA = titleTokens(titleA);\n  const tokensB = titleTokens(titleB);\n\n  if (!tokensA.size || !tokensB.size) return 0;\n\n  let shared = 0;\n\n  for (const token of tokensA) {\n    if (tokensB.has(token)) shared++;\n  }\n\n  return (2 * shared) / (tokensA.size + tokensB.size);\n}\n\nfunction isSameStory(titleA, titleB) {\n  const tokensA = titleTokens(titleA);\n  const tokensB = titleTokens(titleB);\n\n  if (!tokensA.size || !tokensB.size) return false;\n\n  let shared = 0;\n\n  for (const token of tokensA) {\n    if (tokensB.has(token)) shared++;\n  }\n\n  const similarity = (2 * shared) / (tokensA.size + tokensB.size);\n  const containment =\n    shared / Math.min(tokensA.size, tokensB.size);\n\n  // Detecta titulares equivalentes sin eliminar noticias distintas\n  // que solo comparten términos generales como \"banco\" o \"BCRA\".\n  return (\n  (shared >= 4 && similarity >= 0.40) ||\n  (shared >= 5 && containment >= 0.60)\n);\n}\n\n// Las noticias vienen directamente de \"Limitar Noticias\".\nconst newsItems = $('Limitar Noticias').all();\n\n// Historial almacenado en Airtable.\nlet historyItems = [];\n\ntry {\n  historyItems = $('Leer Historial Temas').all();\n} catch (error) {\n  historyItems = [];\n}\n\n// Airtable puede entregar las columnas dentro de \"fields\".\nconst history = historyItems\n  .map(item => item.json.fields || item.json || {})\n  .filter(fields => Object.keys(fields).length > 0);\n\nconst historicalUrls = new Set(\n  history\n    .map(fields => normalizeUrl(fields.URL || fields.url || ''))\n    .filter(Boolean)\n);\n\nconst historicalTitles = history\n  .map(fields =>\n    String(\n      fields['Título'] ||\n      fields.Titulo ||\n      fields.Title ||\n      fields.title ||\n      ''\n    ).trim()\n  )\n  .filter(Boolean);\n\n// Máximo configurado en \"Configurar Ejecucion\".\nlet maxCandidates = 8;\n\ntry {\n  maxCandidates =\n    Number($('Configurar Ejecucion').first().json.max_candidates) || 8;\n} catch (error) {\n  maxCandidates = 8;\n}\n\nconst seenUrls = new Set();\nconst candidates = [];\nconst duplicatesSkipped = [];\n\nfor (const item of newsItems) {\n  const data = item.json || {};\n\n  const title = String(data.title || data.Titulo || '').trim();\n  const url = String(data.link || data.url || data.URL || '').trim();\n  const normalizedUrl = normalizeUrl(url);\n\n  if (!title || !normalizedUrl) continue;\n  if (seenUrls.has(normalizedUrl)) continue;\n  if (historicalUrls.has(normalizedUrl)) continue;\n\n  // Excluye noticias similares a temas ya guardados.\n  const repeatedInHistory = historicalTitles.some(\n    historicalTitle => isSameStory(title, historicalTitle)\n  );\n\n  if (repeatedInHistory) {\n    duplicatesSkipped.push({\n      title,\n      reason: 'Tema similar ya existente en Airtable'\n    });\n    continue;\n  }\n\n  // Excluye publicaciones de diferentes medios sobre el mismo hecho.\n  const repeatedInCandidates = candidates.find(\n    candidate => isSameStory(title, candidate.title)\n  );\n\n  if (repeatedInCandidates) {\n    duplicatesSkipped.push({\n      title,\n      reason: 'Mismo acontecimiento que otro candidato',\n      similar_to: repeatedInCandidates.title,\n      similarity: Number(\n        titleSimilarity(title, repeatedInCandidates.title).toFixed(2)\n      )\n    });\n    continue;\n  }\n\n  seenUrls.add(normalizedUrl);\n\n  candidates.push({\n    title,\n    summary: String(\n      data.contentSnippet ||\n      data.summary ||\n      data.description ||\n      ''\n    ).trim(),\n    url,\n    normalized_url: normalizedUrl,\n    published_at:\n      data.isoDate ||\n      data.pubDate ||\n      data.published ||\n      '',\n    source:\n      data.creator ||\n      data.author ||\n      data.source ||\n      'Google News'\n  });\n\n  if (candidates.length >= maxCandidates) break;\n}\n\nreturn [\n  {\n    json: {\n      candidates,\n      candidates_count: candidates.length,\n      historical_titles: historicalTitles,\n      duplicates_skipped: duplicatesSkipped,\n      duplicates_skipped_count: duplicatesSkipped.length\n    }\n  }\n];"
+      },
+      "id": "4adaa9fa-e8c7-4ef3-89d6-456b1e0e2938",
+      "name": "Preparar Candidatos",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1568,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.candidates_count }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f455f07d-ab09-48d6-bfd4-3801c3c459df",
+      "name": "Hay Candidatos",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1792,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "p1",
+              "name": "candidates",
+              "value": "={{ $json.candidates }}",
+              "type": "array"
+            },
+            {
+              "id": "p2",
+              "name": "candidates_count",
+              "value": "={{ $json.candidates_count }}",
+              "type": "number"
+            },
+            {
+              "id": "p3",
+              "name": "prompt",
+              "value": "=Actuá como estratega de contenidos senior de “Felices los Pesos”, una cuenta argentina de redes sociales sobre finanzas personales, ahorro, descuentos, reintegros, promociones bancarias, Cuenta DNI, Banco Nación, Mercado Pago, billeteras virtuales, ARCA y BCRA.\n\nOBJETIVO\n\nAnalizá las noticias recibidas, elegí las TRES noticias distintas con mayor potencial para Felices los Pesos y desarrollá una pieza completa de Instagram únicamente para la noticia ubicada en el puesto 1.\n\nNo inventes noticias ni propongas tres enfoques de una misma noticia. Cada posición del ranking debe corresponder a una noticia distinta del array recibido.\n\nAUDIENCIA Y VOZ DE MARCA\n\nEscribí para una audiencia argentina que busca ahorrar plata, aprovechar beneficios y entender rápidamente cómo una novedad afecta su bolsillo.\n\nUsá:\n\n- Español argentino natural.\n- Voseo: “podés”, “tenés”, “aprovechá”, “fijate”.\n- Tono directo, cercano, práctico, ágil y con energía.\n- Explicaciones sencillas, pero con información concreta.\n- Montos en formato argentino cuando corresponda.\n- Ganchos que muestren rápidamente por qué la noticia importa o cómo afecta el bolsillo.\n\nEjemplos de tono y estructura, solo cuando sean pertinentes:\n\n- “Ojo si usás…”\n- “Esto te puede hacer ahorrar…”\n- “Si pagás con…, mirá esto.”\n- “Desde esta fecha cambia…”\n- “¿Conviene realmente?”\n- “Te contamos quiénes pueden aprovecharlo.”\n- “Guardá esta información porque…”\n\nNo uses expresiones propias del español neutro o de otros países, como:\n\n- “Descubre”\n- “Desliza para conocer”\n- “Gran noticia”\n- “Checa”\n- “Obtén”\n- “Dinero extra para ti”\n- “Finanzas inteligentes”\n\nPRECISIÓN\n\nREGLA CRÍTICA: cada afirmación factual del guion debe surgir literalmente del title o summary recibido. No uses conocimientos previos del modelo sobre empresas, productos o servicios. Si el summary solo repite el título, limitate a explicar lo confirmado por ese título y aclarar qué información todavía no fue publicada. Ante cualquier duda, omití el dato.\n\nTrabajá únicamente con los datos disponibles en los candidatos.\n\nNo inventes:\n\n- Montos.\n- Porcentajes.\n- Fechas.\n- Topes.\n- Requisitos.\n- Comercios adheridos.\n- Beneficios.\n- Declaraciones.\n- Alcance geográfico.\n- Consecuencias no respaldadas por la noticia.\n\nSi falta un dato importante, indicá de manera natural que todavía no fue informado o evitá afirmarlo.\n\nNo presentes rumores, proyecciones o posibilidades como hechos confirmados.\n\nEVALUACIÓN\n\nPuntuá cada criterio de 0 a 100:\n\n- Viralidad: 35%.\n- Afinidad con Felices los Pesos: 25%.\n- Utilidad para la audiencia: 20%.\n- Urgencia y actualidad: 10%.\n- Diferenciación y originalidad: 10%.\n\nLa viralidad debe estimarse según:\n\n- Cantidad de personas potencialmente afectadas.\n- Impacto sobre el bolsillo.\n- Presencia y repetición del tema en medios.\n- Novedad o cambio respecto de la situación anterior.\n- Potencial para generar guardados, compartidos, comentarios o consultas.\n- Posibilidad de explicarlo con claridad en Instagram.\n\nNo afirmes que una publicación tuvo determinado rendimiento histórico si ese dato no está incluido en los candidatos.\n\nRANKING\n\nSeleccioná las tres noticias distintas con mejor puntuación total.\n\nPara cada alternativa incluí:\n\n- Puesto.\n- Título.\n- Resumen breve.\n- URL.\n- Fuente.\n- Motivo por el que puede interesarle a la audiencia.\n- Ángulo editorial recomendado.\n- Formato recomendado.\n- Gancho sugerido.\n- Las cinco puntuaciones.\n- Score total ponderado.\n\nSi recibís menos de tres noticias válidas, incluí únicamente las disponibles. Nunca inventes noticias para completar el ranking.\n\nCONTENIDO PRINCIPAL\n\nDesarrollá la pieza completa únicamente para la noticia ubicada en el puesto 1.\n\nEl campo “formato” solo puede ser uno de estos valores exactos:\n\n- Reel\n- Carrusel\n- Historias\n\nElegí el formato que mejor explique el tema.\n\nEl campo “gancho” debe:\n\n- Captar la atención en la primera frase.\n- Explicar por qué la noticia afecta o beneficia a la audiencia.\n- Evitar títulos genéricos o sensacionalistas.\n- No afirmar algo que la fuente no confirme.\n\nEl campo “guion” debe ser completo y publicable:\n\nSi elegís “Carrusel”:\n- Escribí entre 7 y 9 placas.\n- Identificá cada una como “Placa 1”, “Placa 2”, etc.\n- La primera placa debe contener el gancho.\n- Explicá qué pasó, a quiénes afecta, desde cuándo, montos o condiciones disponibles, cómo aprovecharlo y qué revisar.\n- La última placa debe incluir un cierre y una acción concreta.\n\nSi elegís “Reel”:\n- Escribí un guion de entre 35 y 50 segundos.\n- Separalo en escenas o bloques.\n- Incluí apertura, desarrollo, datos concretos, explicación práctica y cierre.\n- Indicá brevemente el texto sugerido en pantalla.\n- Evitá repeticiones y frases de relleno.\n\nSi elegís “Historias”:\n- Escribí entre 5 y 7 historias.\n- Identificá cada una como “Historia 1”, “Historia 2”, etc.\n- Incluí gancho, explicación, datos concretos, utilidad práctica y cierre.\n- Podés sugerir encuesta o pregunta únicamente si aporta valor.\n\nEl campo “caption” debe complementar el contenido, no repetir literalmente todo el guion. Debe incluir contexto, información útil y una invitación natural a guardar, compartir o comentar.\n\nEl campo “cta” debe ser concreto, natural y coherente con la publicación.\n\nDECISIÓN\n\nUsá “seleccionar” cuando exista al menos una noticia suficientemente relacionada con Felices los Pesos y respaldada por información concreta.\n\nUsá “descartar” cuando ninguna noticia tenga afinidad suficiente, sea demasiado vaga, esté duplicada o no permita crear contenido confiable.\n\nSALIDA\n\nDevolvé ÚNICAMENTE un objeto JSON válido.\n\nNo agregues Markdown, bloques de código, explicaciones antes o después del JSON ni comentarios.\n\nConservá exactamente estas claves principales porque son utilizadas por los siguientes nodos del workflow:\n\n{\n  \"decision\": \"seleccionar o descartar\",\n  \"title\": \"título de la noticia ganadora\",\n  \"summary\": \"resumen de la noticia ganadora\",\n  \"url\": \"URL de la noticia ganadora\",\n  \"published_at\": \"fecha de publicación disponible\",\n  \"source\": \"fuente disponible\",\n  \"viralidad\": 0,\n  \"afinidad\": 0,\n  \"utilidad\": 0,\n  \"urgencia\": 0,\n  \"originalidad\": 0,\n  \"justification\": \"explicación concreta de por qué ocupa el primer puesto\",\n  \"formato\": \"Reel, Carrusel o Historias\",\n  \"gancho\": \"gancho principal\",\n  \"guion\": \"guion completo según el formato elegido\",\n  \"caption\": \"texto completo para acompañar la publicación\",\n  \"cta\": \"llamada a la acción\",\n  \"top_3_alternativas\": [\n    {\n      \"puesto\": 1,\n      \"title\": \"título\",\n      \"summary\": \"resumen breve\",\n      \"url\": \"URL\",\n      \"source\": \"fuente\",\n      \"potencial\": \"por qué puede interesarle a la audiencia\",\n      \"angulo_editorial\": \"enfoque recomendado\",\n      \"formato_recomendado\": \"Reel, Carrusel o Historias\",\n      \"gancho_sugerido\": \"gancho\",\n      \"viralidad\": 0,\n      \"afinidad\": 0,\n      \"utilidad\": 0,\n      \"urgencia\": 0,\n      \"originalidad\": 0,\n      \"score_total\": 0\n    }\n  ]\n}\n\nLos campos principales deben corresponder siempre a la alternativa del puesto 1.\n\nCalculá “score_total” dentro de cada alternativa con esta fórmula:\n\nviralidad × 0.35 + afinidad × 0.25 + utilidad × 0.20 + urgencia × 0.10 + originalidad × 0.10\n\nCandidatos a evaluar (JSON):\nVALIDACIÓN OBLIGATORIA ANTES DE RESPONDER\n\nAntes de generar la respuesta final, verificá internamente que se cumplan todas estas condiciones:\n\n1. La clave \"top_3_alternativas\" es obligatoria.\n\n2. \"top_3_alternativas\" debe contener exactamente 3 elementos cuando existan al menos 3 candidatos válidos.\n\n3. Cada elemento de \"top_3_alternativas\" debe corresponder a una noticia distinta del array candidates. No pueden ser publicaciones diferentes sobre el mismo acontecimiento.\n\n4. Los puestos deben ser exactamente 1, 2 y 3, ordenados de mayor a menor score_total.\n\n5. Los campos principales:\ntitle, summary, url, published_at, source, viralidad, afinidad, utilidad, urgencia, originalidad, justification, formato, gancho, guion, caption y cta\ndeben corresponder exclusivamente a la alternativa ubicada en el puesto 1.\n\n6. \"guion\" debe ser un único string de texto. No debe ser un array ni un objeto. Dentro del texto podés separar las partes mediante \"Placa 1:\", \"Escena 1:\" o \"Historia 1:\", según el formato elegido.\n\n7. Cada afirmación factual debe surgir expresamente del title o summary de alguno de los candidatos.\n\n8. No uses conocimientos previos del modelo sobre empresas, bancos, productos o servicios.\n\n9. Eliminá cualquier afirmación que no esté respaldada por title o summary.\n\n10. No uses expresiones como:\n- \"tarifas competitivas\"\n- \"servicios innovadores\"\n- \"nuevas funcionalidades\"\n- \"mejores beneficios\"\n- \"puede ayudarte a ahorrar\"\n- \"revolucionará el mercado\"\nsalvo que esa información aparezca expresamente en title o summary.\n\n11. Si el summary solo repite el título, limitate a explicar lo que ese título confirma. Indicá qué información todavía no fue publicada cuando sea necesario.\n\n12. Si no existe información suficiente para desarrollar una afirmación, omitila. Nunca completes información con suposiciones.\n\n13. No devuelvas la respuesta si falta \"top_3_alternativas\", si contiene menos de 3 noticias existiendo candidatos suficientes, o si el JSON no es válido.\n\n{{ JSON.stringify($json.candidates) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": "={{ false }}",
+        "options": {}
+      },
+      "id": "60bd793e-1b1b-4ce5-8a68-fff6a2d956d9",
+      "name": "Preparar Prompt IA",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        2016,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "responses": {
+          "values": [
+            {
+              "content": "={{ $json.prompt }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "maxTokens": 3500,
+          "textFormat": {
+            "textOptions": {
+              "type": "json_object"
+            }
+          },
+          "temperature": 0.3
+        }
+      },
+      "id": "7e427af3-85ab-4cac-9b79-94c4a3cb5333",
+      "name": "Seleccionar y Redactar",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        2240,
+        96
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "openAiApi": {
+          "id": null,
+          "name": "Gateway credits",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parsea la respuesta JSON de OpenAI, valida el Top 3\n// y recalcula las puntuaciones de forma segura.\n\nfunction stripFences(value) {\n  return String(value || '')\n    .replace(/^\\s*```(?:json)?\\s*/i, '')\n    .replace(/\\s*```\\s*$/i, '')\n    .trim();\n}\n\nfunction toNum(value) {\n  const number = Number(value);\n\n  if (!Number.isFinite(number)) return 0;\n\n  return Math.max(0, Math.min(100, number));\n}\n\nfunction normalizeUrl(value) {\n  if (!value) return '';\n\n  return String(value)\n    .trim()\n    .split('#')[0]\n    .replace(/\\/$/, '')\n    .toLowerCase();\n}\n\nfunction calculateScore(data) {\n  const viralidad = toNum(data.viralidad);\n  const afinidad = toNum(data.afinidad);\n  const utilidad = toNum(data.utilidad);\n  const urgencia = toNum(data.urgencia);\n  const originalidad = toNum(data.originalidad);\n\n  const score =\n    viralidad * 0.35 +\n    afinidad * 0.25 +\n    utilidad * 0.20 +\n    urgencia * 0.10 +\n    originalidad * 0.10;\n\n  return {\n    viralidad,\n    afinidad,\n    utilidad,\n    urgencia,\n    originalidad,\n    score_total: Math.round(score * 100) / 100\n  };\n}\n\nfunction toText(value) {\n  if (value === null || value === undefined) return '';\n  if (typeof value === 'string') return value.trim();\n\n  if (Array.isArray(value)) {\n    return value\n      .map((element, index) => {\n        if (typeof element === 'string') return element;\n\n        if (element && typeof element === 'object') {\n          const label =\n            element.placa ||\n            element.escena ||\n            element.historia ||\n            `Parte ${index + 1}`;\n\n          const text =\n            element.texto ||\n            element.contenido ||\n            element.descripcion ||\n            JSON.stringify(element);\n\n          return `${label}: ${text}`;\n        }\n\n        return String(element);\n      })\n      .join('\\n');\n  }\n\n  return JSON.stringify(value);\n}\n\n// Obtiene la respuesta del nodo OpenAI.\nconst raw =\n  $json.output &&\n  $json.output[0] &&\n  $json.output[0].content &&\n  $json.output[0].content[0]\n    ? $json.output[0].content[0].text\n    : ($json.text !== undefined ? $json.text : $json);\n\nlet parsed;\n\nif (raw && typeof raw === 'object') {\n  parsed = raw;\n} else {\n  try {\n    parsed = JSON.parse(stripFences(raw));\n  } catch (error) {\n    throw new Error(\n      'No se pudo parsear el JSON de OpenAI: ' +\n      (error && error.message ? error.message : String(error))\n    );\n  }\n}\n\nif (!parsed || typeof parsed !== 'object') {\n  throw new Error('OpenAI no devolvió un objeto JSON válido.');\n}\n\n// Normaliza y valida el Top 3.\nconst rawTop3 = Array.isArray(parsed.top_3_alternativas)\n  ? parsed.top_3_alternativas\n  : [];\n\n// Si OpenAI no devuelve el Top 3, el flujo continúa con el tema principal.\n\nconst top3 = rawTop3\n  .slice(0, 3)\n  .map((alternative, index) => {\n    const scores = calculateScore(alternative || {});\n\n    return {\n      ...(alternative || {}),\n      puesto: index + 1,\n      ...scores\n    };\n  })\n  .sort((a, b) => b.score_total - a.score_total)\n  .map((alternative, index) => ({\n    ...alternative,\n    puesto: index + 1\n  }));\n\n// Recalcula las métricas principales.\nconst mainScores = calculateScore(parsed);\n\nconst result = {\n  ...parsed,\n  ...mainScores,\n  title: String(parsed.title || '').trim(),\n  summary: String(parsed.summary || '').trim(),\n  url: String(parsed.url || '').trim(),\n  source: String(parsed.source || '').trim(),\n  published_at: String(parsed.published_at || '').trim(),\n  justification: toText(parsed.justification),\n  formato: String(parsed.formato || '').trim(),\n  gancho: toText(parsed.gancho),\n  guion: toText(parsed.guion),\n  caption: toText(parsed.caption),\n  cta: toText(parsed.cta),\n  top_3_alternativas: top3,\n  top_3_resumen: top3\n    .map(\n      alternative =>\n        `${alternative.puesto}. ${alternative.title} — Score: ${alternative.score_total}`\n    )\n    .join('\\n'),\n  idempotency_key: normalizeUrl(parsed.url),\n  decision: String(parsed.decision || '').trim().toLowerCase()\n};\n\nreturn [\n  {\n    json: result\n  }\n];"
+      },
+      "id": "03c73c3e-00cb-4501-9410-d97ec027f515",
+      "name": "Parsear y Calcular Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2464,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "u1",
+              "leftValue": "={{ $json.afinidad }}",
+              "rightValue": 60,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            },
+            {
+              "id": "u2",
+              "leftValue": "={{ $json.score_total }}",
+              "rightValue": 65,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c87dbe74-7bdf-404b-bfcf-ddbdf3d6f842",
+      "name": "Supera Umbrales",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2688,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblEf7yLJtuFKrNN9",
+          "mode": "list",
+          "cachedResultName": "Temas",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblEf7yLJtuFKrNN9"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Título": "={{ $('Parsear y Calcular Score').item.json.title }}",
+            "Resumen": "={{ $('Parsear y Calcular Score').item.json.summary }}",
+            "URL": "={{ $('Parsear y Calcular Score').item.json.url }}",
+            "Fecha publicación": "={{ $('Parsear y Calcular Score').item.json.published_at }}",
+            "Fuente": "={{ $('Parsear y Calcular Score').item.json.source }}",
+            "Viralidad": "={{ $('Parsear y Calcular Score').item.json.viralidad }}",
+            "Afinidad": "={{ $('Parsear y Calcular Score').item.json.afinidad }}",
+            "Utilidad": "={{ $('Parsear y Calcular Score').item.json.utilidad }}",
+            "Urgencia": "={{ $('Parsear y Calcular Score').item.json.urgencia }}",
+            "Originalidad": "={{ $('Parsear y Calcular Score').item.json.originalidad }}",
+            "Score total": "={{ $('Parsear y Calcular Score').item.json.score_total }}",
+            "Estado": "={{ 'Seleccionado' }}",
+            "Idempotency key": "={{ $('Parsear y Calcular Score').item.json.idempotency_key }}",
+            "Justificación": "={{ $('Parsear y Calcular Score').item.json.justification }}",
+            "Ejecución": "={{ [$('Registrar Inicio').item.json.id] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Título",
+              "displayName": "Título",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Resumen",
+              "displayName": "Resumen",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha publicación",
+              "displayName": "Fecha publicación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fuente",
+              "displayName": "Fuente",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Viralidad",
+              "displayName": "Viralidad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Afinidad",
+              "displayName": "Afinidad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Utilidad",
+              "displayName": "Utilidad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Urgencia",
+              "displayName": "Urgencia",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Originalidad",
+              "displayName": "Originalidad",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Score total",
+              "displayName": "Score total",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Idempotency key",
+              "displayName": "Idempotency key",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Justificación",
+              "displayName": "Justificación",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ejecución",
+              "displayName": "Ejecución",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "id": "412213a2-6af2-47f3-95d8-16a39d0d4e5a",
+      "name": "Guardar Tema Seleccionado",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        2912,
+        96
+      ],
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblaW5rXYHhbNzbJg",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Título": "={{ $('Parsear y Calcular Score').item.json.title }}",
+            "Tema": "={{ [$('Guardar Tema Seleccionado').item.json.id] }}",
+            "Ejecución": "={{ [$('Registrar Inicio').item.json.id] }}",
+            "Formato": "={{ ['Reel', 'Carrusel', 'Historias'].includes($('Parsear y Calcular Score').item.json.formato) ? $('Parsear y Calcular Score').item.json.formato : 'Carrusel' }}",
+            "Gancho": "={{ $('Parsear y Calcular Score').item.json.gancho }}",
+            "Guion": "={{ $('Parsear y Calcular Score').item.json.guion }}",
+            "Caption": "={{ $('Parsear y Calcular Score').item.json.caption }}",
+            "CTA": "={{ $('Parsear y Calcular Score').item.json.cta }}",
+            "Estado": "={{ 'En revisión' }}",
+            "Aprobado": false,
+            "Fecha actualización": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Título",
+              "displayName": "Título",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tema",
+              "displayName": "Tema",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ejecución",
+              "displayName": "Ejecución",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Formato",
+              "displayName": "Formato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gancho",
+              "displayName": "Gancho",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Guion",
+              "displayName": "Guion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CTA",
+              "displayName": "CTA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado",
+              "displayName": "Aprobado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha actualización",
+              "displayName": "Fecha actualización",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "id": "1aec954a-ec56-4d35-81a8-8aec9486ee4b",
+      "name": "Guardar Contenido Revision",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        3136,
+        96
+      ],
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblMAqdomkw6XmQ8y",
+          "mode": "list",
+          "cachedResultName": "Ejecuciones",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblMAqdomkw6XmQ8y"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Registrar Inicio').item.json.id }}",
+            "Estado": "={{ 'Esperando aprobación' }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "id": "133f5bc1-2aab-4306-a3ca-8e64a86d66cf",
+      "name": "Marcar Esperando Aprobacion",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        3360,
+        96
+      ],
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "={{ $('Configurar Ejecucion').item.json.approval_email }}",
+        "subject": "=Felices los Pesos | Aprobar contenido: {{ $('Parsear y Calcular Score').item.json.title }}",
+        "message": "=TOP 3 DE NOTICIAS\n\n{{ $('Parsear y Calcular Score').item.json.top_3_resumen }}\n\nCONTENIDO PROPUESTO PARA LA OPCIÓN 1\n\nTítulo: {{ $('Parsear y Calcular Score').item.json.title }}\nScore total: {{ $('Parsear y Calcular Score').item.json.score_total }}\n\nJustificación:\n{{ $('Parsear y Calcular Score').item.json.justification }}\n\nFormato: {{ $('Parsear y Calcular Score').item.json.formato }}\n\nGancho:\n{{ $('Parsear y Calcular Score').item.json.gancho }}\n\nGuion:\n{{ $('Parsear y Calcular Score').item.json.guion }}\n\nCaption:\n{{ $('Parsear y Calcular Score').item.json.caption }}\n\nCTA:\n{{ $('Parsear y Calcular Score').item.json.cta }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double",
+            "approveLabel": "Aprobar",
+            "disapproveLabel": "Rechazar"
+          }
+        },
+        "options": {}
+      },
+      "id": "946851df-37f3-4764-b77a-324a019dbf56",
+      "name": "Solicitar Aprobacion HITL",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        3584,
+        96
+      ],
+      "webhookId": "be9d716d-7f36-4c41-966e-00bd19c0cbe1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "0ntOpc9rAhrMJWo2",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "a1",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dc160a4b-e52b-45ed-ad8b-69f4414a3080",
+      "name": "Fue Aprobado",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3808,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 8,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "id": "84cc0f50-c0e8-488f-ad11-d5630e88b9d0",
+      "name": "Trigger Diario 0830",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        192
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblaW5rXYHhbNzbJg",
+          "mode": "list",
+          "cachedResultName": "Contenidos",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblaW5rXYHhbNzbJg"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Aprobado": true,
+            "id": "={{ $('Guardar Contenido Revision').item.json.id }}",
+            "Estado": "Aprobado",
+            "Fecha actualización": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Título",
+              "displayName": "Título",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tema",
+              "displayName": "Tema",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ejecución",
+              "displayName": "Ejecución",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Formato",
+              "displayName": "Formato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Reel",
+                  "value": "Reel"
+                },
+                {
+                  "name": "Carrusel",
+                  "value": "Carrusel"
+                },
+                {
+                  "name": "Historias",
+                  "value": "Historias"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gancho",
+              "displayName": "Gancho",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Guion",
+              "displayName": "Guion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CTA",
+              "displayName": "CTA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado",
+              "displayName": "Aprobado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gmail message ID",
+              "displayName": "Gmail message ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gmail thread ID",
+              "displayName": "Gmail thread ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha actualización",
+              "displayName": "Fecha actualización",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        4032,
+        96
+      ],
+      "id": "93ee128a-302a-4f42-8e50-913d82d918f3",
+      "name": "Marcar Contenido Aprobado",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblMAqdomkw6XmQ8y",
+          "mode": "list",
+          "cachedResultName": "Ejecuciones",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblMAqdomkw6XmQ8y"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Registrar Inicio').item.json.id }}",
+            "Estado": "Exitosa"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Ejecución ID",
+              "displayName": "Ejecución ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Workflow",
+              "displayName": "Workflow",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Inicio",
+              "displayName": "Inicio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fin",
+              "displayName": "Fin",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "En curso",
+                  "value": "En curso"
+                },
+                {
+                  "name": "Esperando aprobación",
+                  "value": "Esperando aprobación"
+                },
+                {
+                  "name": "Exitosa",
+                  "value": "Exitosa"
+                },
+                {
+                  "name": "Rechazada",
+                  "value": "Rechazada"
+                },
+                {
+                  "name": "Sin candidatos",
+                  "value": "Sin candidatos"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Items entrada",
+              "displayName": "Items entrada",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Items salida",
+              "displayName": "Items salida",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Costo estimado USD",
+              "displayName": "Costo estimado USD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error nodo",
+              "displayName": "Error nodo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error mensaje",
+              "displayName": "Error mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Duración segundos",
+              "displayName": "Duración segundos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Temas",
+              "displayName": "Temas",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Contenidos",
+              "displayName": "Contenidos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Dashboard KPIs",
+              "displayName": "Dashboard KPIs",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        4256,
+        96
+      ],
+      "id": "a8cfc12a-bd6c-49bd-92df-06d9708e4c89",
+      "name": "Cerrar Ejecucion Exitosa",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblaW5rXYHhbNzbJg",
+          "mode": "list",
+          "cachedResultName": "Contenidos",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblaW5rXYHhbNzbJg"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Aprobado": false,
+            "id": "={{ $('Guardar Contenido Revision').item.json.id }}",
+            "Estado": "={{ 'Rechazado' }}",
+            "Fecha actualización": "={{ $now.toISO() }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Título",
+              "displayName": "Título",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tema",
+              "displayName": "Tema",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ejecución",
+              "displayName": "Ejecución",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Formato",
+              "displayName": "Formato",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Reel",
+                  "value": "Reel"
+                },
+                {
+                  "name": "Carrusel",
+                  "value": "Carrusel"
+                },
+                {
+                  "name": "Historias",
+                  "value": "Historias"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gancho",
+              "displayName": "Gancho",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Guion",
+              "displayName": "Guion",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Caption",
+              "displayName": "Caption",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "CTA",
+              "displayName": "CTA",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "En revisión",
+                  "value": "En revisión"
+                },
+                {
+                  "name": "Aprobado",
+                  "value": "Aprobado"
+                },
+                {
+                  "name": "Rechazado",
+                  "value": "Rechazado"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Aprobado",
+              "displayName": "Aprobado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "boolean",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gmail message ID",
+              "displayName": "Gmail message ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Gmail thread ID",
+              "displayName": "Gmail thread ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha actualización",
+              "displayName": "Fecha actualización",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        4032,
+        304
+      ],
+      "id": "eb178f6c-86ac-4250-8cd0-ada071e5fb16",
+      "name": "Marcar Contenido Rechazado",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblMAqdomkw6XmQ8y",
+          "mode": "list",
+          "cachedResultName": "Ejecuciones",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblMAqdomkw6XmQ8y"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Registrar Inicio').item.json.id }}",
+            "Estado": "={{ 'Rechazada' }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Ejecución ID",
+              "displayName": "Ejecución ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Workflow",
+              "displayName": "Workflow",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Inicio",
+              "displayName": "Inicio",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fin",
+              "displayName": "Fin",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Estado",
+              "displayName": "Estado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "En curso",
+                  "value": "En curso"
+                },
+                {
+                  "name": "Esperando aprobación",
+                  "value": "Esperando aprobación"
+                },
+                {
+                  "name": "Exitosa",
+                  "value": "Exitosa"
+                },
+                {
+                  "name": "Rechazada",
+                  "value": "Rechazada"
+                },
+                {
+                  "name": "Sin candidatos",
+                  "value": "Sin candidatos"
+                },
+                {
+                  "name": "Error",
+                  "value": "Error"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Items entrada",
+              "displayName": "Items entrada",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Items salida",
+              "displayName": "Items salida",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Costo estimado USD",
+              "displayName": "Costo estimado USD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error nodo",
+              "displayName": "Error nodo",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Error mensaje",
+              "displayName": "Error mensaje",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Duración segundos",
+              "displayName": "Duración segundos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Temas",
+              "displayName": "Temas",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Contenidos",
+              "displayName": "Contenidos",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Dashboard KPIs",
+              "displayName": "Dashboard KPIs",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "typecast": true
+        }
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        4256,
+        304
+      ],
+      "id": "de2a9deb-8d2a-4418-a6d7-b07212dc8678",
+      "name": "Cerrar Ejecucion Rechazada",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblooOgxl9veB39Vs",
+          "mode": "list",
+          "cachedResultName": "Dashboard KPIs",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblooOgxl9veB39Vs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Registro": "={{ $('Configurar Ejecucion').item.json.execution_id }}",
+            "Es error": 0,
+            "Generó contenido": 1,
+            "Fue aprobado": 1,
+            "Costo USD": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Registro",
+              "displayName": "Registro",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ejecución",
+              "displayName": "Ejecución",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Es exitosa",
+              "displayName": "Es exitosa",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Es error",
+              "displayName": "Es error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Generó contenido",
+              "displayName": "Generó contenido",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fue aprobado",
+              "displayName": "Fue aprobado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tasa error row",
+              "displayName": "Tasa error row",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Tasa aprobación row",
+              "displayName": "Tasa aprobación row",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Costo USD",
+              "displayName": "Costo USD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        4480,
+        96
+      ],
+      "id": "b9922dc6-919e-47ad-97a1-5e98a2529076",
+      "name": "Create a record",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appxI2IKCoBWmPZQp",
+          "mode": "list",
+          "cachedResultName": "Felices los Pesos Radar IA",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblooOgxl9veB39Vs",
+          "mode": "list",
+          "cachedResultName": "Dashboard KPIs",
+          "cachedResultUrl": "https://airtable.com/appxI2IKCoBWmPZQp/tblooOgxl9veB39Vs"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Registro": "={{ $('Configurar Ejecucion').item.json.execution_id }}",
+            "Es error": 0,
+            "Generó contenido": 1,
+            "Fue aprobado": 0,
+            "Costo USD": 0
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Registro",
+              "displayName": "Registro",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Ejecución",
+              "displayName": "Ejecución",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "array",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fecha",
+              "displayName": "Fecha",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "dateTime",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Es exitosa",
+              "displayName": "Es exitosa",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Es error",
+              "displayName": "Es error",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Generó contenido",
+              "displayName": "Generó contenido",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Fue aprobado",
+              "displayName": "Fue aprobado",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Tasa error row",
+              "displayName": "Tasa error row",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Tasa aprobación row",
+              "displayName": "Tasa aprobación row",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Costo USD",
+              "displayName": "Costo USD",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.2,
+      "position": [
+        4480,
+        304
+      ],
+      "id": "616d235d-7700-408d-8b4d-30a0ba59437c",
+      "name": "Create a record1",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "mWPG5JllRt4fHfzL",
+          "name": "Airtable account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Trigger Manual Pruebas": {
+      "main": [
+        [
+          {
+            "node": "Configurar Ejecucion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configurar Ejecucion": {
+      "main": [
+        [
+          {
+            "node": "Registrar Inicio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registrar Inicio": {
+      "main": [
+        [
+          {
+            "node": "Leer Fuente Activa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Fuente Activa": {
+      "main": [
+        [
+          {
+            "node": "Leer Noticias RSS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Noticias RSS": {
+      "main": [
+        [
+          {
+            "node": "Limitar Noticias",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limitar Noticias": {
+      "main": [
+        [
+          {
+            "node": "Leer Historial Temas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Historial Temas": {
+      "main": [
+        [
+          {
+            "node": "Preparar Candidatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Candidatos": {
+      "main": [
+        [
+          {
+            "node": "Hay Candidatos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hay Candidatos": {
+      "main": [
+        [
+          {
+            "node": "Preparar Prompt IA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Preparar Prompt IA": {
+      "main": [
+        [
+          {
+            "node": "Seleccionar y Redactar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seleccionar y Redactar": {
+      "main": [
+        [
+          {
+            "node": "Parsear y Calcular Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parsear y Calcular Score": {
+      "main": [
+        [
+          {
+            "node": "Supera Umbrales",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supera Umbrales": {
+      "main": [
+        [
+          {
+            "node": "Guardar Tema Seleccionado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Tema Seleccionado": {
+      "main": [
+        [
+          {
+            "node": "Guardar Contenido Revision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Guardar Contenido Revision": {
+      "main": [
+        [
+          {
+            "node": "Marcar Esperando Aprobacion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar Esperando Aprobacion": {
+      "main": [
+        [
+          {
+            "node": "Solicitar Aprobacion HITL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Solicitar Aprobacion HITL": {
+      "main": [
+        [
+          {
+            "node": "Fue Aprobado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger Diario 0830": {
+      "main": [
+        [
+          {
+            "node": "Configurar Ejecucion",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fue Aprobado": {
+      "main": [
+        [
+          {
+            "node": "Marcar Contenido Aprobado",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Marcar Contenido Rechazado",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar Contenido Aprobado": {
+      "main": [
+        [
+          {
+            "node": "Cerrar Ejecucion Exitosa",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Marcar Contenido Rechazado": {
+      "main": [
+        [
+          {
+            "node": "Cerrar Ejecucion Rechazada",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cerrar Ejecucion Exitosa": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cerrar Ejecucion Rechazada": {
+      "main": [
+        [
+          {
+            "node": "Create a record1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "hjHeUeUjoBagLCTp",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "versionId": "445e990f-fb88-4aae-8964-41bf7b432ac5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3af8d6d093ac9c025d596e10cab4b04da8be12330e822a56a8aa30ba617de09a"
+  },
+  "nodeGroups": [
+    {
+      "id": "8e8e2e96-da3a-4d0a-a5f9-53cfdeb712e0",
+      "name": "Iniciar ejecución",
+      "nodeIds": [
+        "8852fae3-3aa6-4dfe-8afe-00ed90bf88b0",
+        "27c351db-b0c0-435a-9f65-adc8891ebfb0"
+      ],
+      "description": "Define parámetros y umbrales de la corrida y registra el inicio de la ejecución en Airtable."
+    },
+    {
+      "id": "a822cdc7-7588-477b-934a-b5265b6e7609",
+      "name": "Recolectar noticias",
+      "nodeIds": [
+        "09610cdb-9fd7-4736-aa9f-82054aa09b02",
+        "2496aef4-bcca-4c7c-baf7-2be8913b12d3",
+        "f24ffa0f-6c08-4c01-b659-afddc55ca4fd"
+      ],
+      "description": "Lee la fuente RSS activa en Airtable, descarga las noticias del feed y limita la cantidad a procesar."
+    },
+    {
+      "id": "924877e7-4d8a-41fa-9701-7eab55d61e4e",
+      "name": "Filtrar candidatos",
+      "nodeIds": [
+        "31db49da-11f9-49ad-ba08-d66d58cc62f3",
+        "4adaa9fa-e8c7-4ef3-89d6-456b1e0e2938",
+        "f455f07d-ab09-48d6-bfd4-3801c3c459df"
+      ],
+      "description": "Normaliza las noticias, descarta URLs ya vistas o duplicadas y verifica si queda al menos un candidato."
+    },
+    {
+      "id": "45147a8a-bbd4-4d87-859d-af7db64472d9",
+      "name": "Seleccionar y puntuar tema",
+      "nodeIds": [
+        "60bd793e-1b1b-4ce5-8a68-fff6a2d956d9",
+        "7e427af3-85ab-4cac-9b79-94c4a3cb5333",
+        "03c73c3e-00cb-4501-9410-d97ec027f515",
+        "c87dbe74-7bdf-404b-bfcf-ddbdf3d6f842"
+      ],
+      "description": "Arma el prompt con los candidatos, pide a OpenAI que elija y redacte un borrador, calcula el score y verifica si supera los umbrales."
+    },
+    {
+      "id": "c4947c0e-7df1-4346-a078-83b4f59cfe04",
+      "name": "Guardar y solicitar aprobacion",
+      "nodeIds": [
+        "412213a2-6af2-47f3-95d8-16a39d0d4e5a",
+        "1aec954a-ec56-4d35-81a8-8aec9486ee4b",
+        "133f5bc1-2aab-4306-a3ca-8e64a86d66cf",
+        "946851df-37f3-4764-b77a-324a019dbf56",
+        "dc160a4b-e52b-45ed-ad8b-69f4414a3080"
+      ],
+      "description": "Guarda el tema y el borrador en Airtable, marca la ejecución en espera y pide aprobación humana por email antes de continuar."
+    }
+  ],
+  "id": "2MhyvYfbxKGz78Z7",
+  "tags": []
+}
