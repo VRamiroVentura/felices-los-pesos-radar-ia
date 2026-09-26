@@ -22,6 +22,7 @@ Proyecto final del curso AI Automation. El sistema releva noticias financieras a
 
 - Dashboard KPI: https://airtable.com/appxI2IKCoBWmPZQp/shrCmCXdf2JFA3CHq
 - Contenidos: https://airtable.com/appxI2IKCoBWmPZQp/shre0HzEuc4gNljXr
+- VIDEO YT: https://youtu.be/1sAPLxe6gLM
 
 ## Ejecución resumida
 
